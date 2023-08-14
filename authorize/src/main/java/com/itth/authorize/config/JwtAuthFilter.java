@@ -1,4 +1,4 @@
-package com.sergio.jwt.backend.config;
+package com.itth.authorize.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

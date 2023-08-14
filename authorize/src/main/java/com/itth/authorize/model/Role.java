@@ -6,12 +6,12 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,16 +20,16 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Role implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id = UUID.randomUUID().toString();
+    @UuidGenerator
+    private String id;
 
     @NotBlank
     @Size(min = 3, max = 50)
     @Column
     private String name; // e.g., "USER", "ADMIN"
 
-    @OneToMany
-    private ArrayList<Permission> permissions;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Permission> permissions;
 
     @Serial
     private void writeObject(java.io.ObjectOutputStream stream)

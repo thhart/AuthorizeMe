@@ -1,7 +1,7 @@
-package com.sergio.jwt.backend.config;
+package com.itth.authorize.config;
 
-import com.sergio.jwt.backend.dtos.ErrorDto;
-import com.sergio.jwt.backend.exceptions.AppException;
+import com.itth.authorize.dto.ErrorDto;
+import com.itth.authorize.exception.AppException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

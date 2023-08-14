@@ -1,6 +1,8 @@
-package mapper;
+package com.itth.authorize.mapper;
 
-import dto.UserDto;
+import com.itth.authorize.dto.SignUpDto;
+import com.itth.authorize.dto.UserDto;
+import com.itth.authorize.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

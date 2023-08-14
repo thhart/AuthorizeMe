@@ -7,12 +7,12 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,8 +21,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id = UUID.randomUUID().toString();
+    @UuidGenerator
+    private String id;
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -40,8 +40,8 @@ public class User implements Serializable {
     @Column
     private String password;
 
-    @OneToMany
-    private ArrayList<Role> roles;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     @Serial
     private void writeObject(java.io.ObjectOutputStream stream)

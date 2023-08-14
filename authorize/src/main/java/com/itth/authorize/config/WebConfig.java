@@ -1,4 +1,4 @@
-package com.sergio.jwt.backend.config;
+package com.itth.authorize.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

@@ -15,6 +15,7 @@ export class LoginFormComponent {
   lastName: string = "";
   login: string = "";
   password: string = "";
+  email: string = "";
 
 	onLoginTab(): void {
 		this.active = "login";
@@ -29,7 +30,7 @@ export class LoginFormComponent {
   }
 
   onSubmitRegister(): void {
-    this.onSubmitRegisterEvent.emit({"firstName": this.firstName, "lastName": this.lastName, "login": this.login, "password": this.password});
+    this.onSubmitRegisterEvent.emit({"firstName": this.firstName, "lastName": this.lastName, "login": this.login, "password": this.password, "email": this.email});
   }
 
 }

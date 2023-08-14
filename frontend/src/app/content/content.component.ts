@@ -43,7 +43,8 @@ export class ContentComponent {
 		        firstName: input.firstName,
 		        lastName: input.lastName,
 		        login: input.login,
-		        password: input.password
+		        password: input.password,
+		        email: input.email
 		    }).then(
 		    response => {
 		        this.axiosService.setAuthToken(response.data.token);

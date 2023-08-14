@@ -1,7 +1,7 @@
-package com.sergio.jwt.backend.config;
+package com.itth.authorize.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sergio.jwt.backend.dtos.ErrorDto;
+import com.itth.authorize.dto.ErrorDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
