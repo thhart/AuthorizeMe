@@ -1,11 +1,47 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {TokenService} from '../token.service';
+import {AuthGuard} from '../auth-guard';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-	@Input() pageTitle!: string;
-	@Input() logoSrc!: string;
+export class HeaderComponent implements OnInit {
+  @Input() pageTitle!: string;
+  @Input() logoSrc!: string;
+
+  isLoggedIn: boolean = false;
+
+  constructor(private tokenService: TokenService, private router: Router, private authGuard: AuthGuard) {
+  } // Inject the service
+
+  ngOnInit() {
+    // Listen to router events
+     this.router.events.subscribe(event => {
+       if (event instanceof NavigationEnd) {
+         this.checkUserAuthentication();
+       }
+     });
+  }
+
+  logout() {
+    localStorage.removeItem('auth_token');
+    this.isLoggedIn = false;
+    this.authGuard.ok = false;
+    this.router.navigate(['/welcome']);
+  }
+
+  checkUserAuthentication() {
+    this.isLoggedIn = this.authGuard.ok;
+
+    // this.tokenService.isUserAuthenticated().then(isAuthenticated => {
+    //   if (! isAuthenticated) {
+    //     this.isLoggedIn = false;
+    //   } else {
+    //     this.isLoggedIn = true;
+    //   }
+    // });
+  }
 }

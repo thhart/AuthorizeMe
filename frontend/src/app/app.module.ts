@@ -1,17 +1,19 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ButtonsComponent } from './buttons/buttons.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { WelcomeContentComponent } from './welcome-content/welcome-content.component';
-import { AuthContentComponent } from './auth-content/auth-content.component';
-import { ContentComponent } from './content/content.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {ButtonsComponent} from './buttons/buttons.component';
+import {HeaderComponent} from './header/header.component';
+import {LoginFormComponent} from './login-form/login-form.component';
+import {WelcomeContentComponent} from './welcome-content/welcome-content.component';
+import {MessageContentComponent} from './message-content/message-content.component';
 
-import { AxiosService } from './axios.service';
+import {TokenService} from './token.service';
+import {RegisterFormComponent} from './register-form/register-form.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {TokenInterceptor} from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,15 +22,16 @@ import { AxiosService } from './axios.service';
     HeaderComponent,
     LoginFormComponent,
     WelcomeContentComponent,
-    AuthContentComponent,
-    ContentComponent
+    MessageContentComponent,
+    RegisterFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [AxiosService],
+  providers: [TokenService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

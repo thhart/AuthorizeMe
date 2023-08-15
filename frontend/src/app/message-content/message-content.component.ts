@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { AxiosService } from '../axios.service';
+import { TokenService } from '../token.service';
 
 @Component({
-  selector: 'app-auth-content',
-  templateUrl: './auth-content.component.html',
-  styleUrls: ['./auth-content.component.css']
+  selector: 'app-message-content',
+  templateUrl: './message-content.component.html',
+  styleUrls: ['./message-content.component.css']
 })
-export class AuthContentComponent {
+export class MessageContentComponent {
   data: string[] = [];
 
-  constructor(private axiosService: AxiosService) {}
+  constructor(private tokenService: TokenService) {}
 
   ngOnInit(): void {
-    this.axiosService.request(
+    this.tokenService.request(
         "GET",
         "/messages",
         {}).then(
@@ -21,7 +21,7 @@ export class AuthContentComponent {
         }).catch(
         (error) => {
             if (error.response.status === 401) {
-                this.axiosService.setAuthToken(null);
+                this.tokenService.setAuthToken(null);
             } else {
                 this.data = error.response.code;
             }

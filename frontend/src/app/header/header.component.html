@@ -1,4 +1,23 @@
 <header class="app-header">
-	<img src={{logoSrc}} class="app-logo" alt="logo" />
-	<h1 class="app-title">{{pageTitle}}</h1>
+  <table width="100%">
+    <tr>
+      <td align="left">
+        <img src={{logoSrc}} class="app-logo" alt="logo" />
+      </td>
+      <td align="right">
+        <div *ngIf="isLoggedIn == true">
+           <button class="btn btn-dark" (click)="logout()" style="margin: 10px">
+             Logout
+           </button>
+        </div>
+        <div *ngIf="isLoggedIn != true">
+          <a routerLink="/login">
+           <button class="btn btn-dark" style="margin: 10px">
+             Login
+           </button>
+          </a>
+        </div>
+      </td>
+    </tr>
+  </table>
 </header>

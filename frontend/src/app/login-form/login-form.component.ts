@@ -1,4 +1,6 @@
-import { EventEmitter, Component, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import {TokenService} from "../token.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -6,31 +8,33 @@ import { EventEmitter, Component, Output } from '@angular/core';
   styleUrls: ['./login-form.component.css'],
   })
 export class LoginFormComponent {
-
-  @Output() onSubmitLoginEvent = new EventEmitter();
-  @Output() onSubmitRegisterEvent = new EventEmitter();
-
-	active: string = "login";
   firstName: string = "";
   lastName: string = "";
   login: string = "";
   password: string = "";
   email: string = "";
 
-	onLoginTab(): void {
-		this.active = "login";
-	}
-
-	onRegisterTab(): void {
-		this.active = "register";
-	}
-
-  onSubmitLogin(): void {
-    this.onSubmitLoginEvent.emit({"login": this.login, "password": this.password});
+  constructor(private router: Router, private tokenService: TokenService) {
   }
 
-  onSubmitRegister(): void {
-    this.onSubmitRegisterEvent.emit({"firstName": this.firstName, "lastName": this.lastName, "login": this.login, "password": this.password, "email": this.email});
+  onSubmitLogin(input: LoginFormComponent): void {
+    this.tokenService.request(
+      "POST",
+      "/login",
+      {
+        login: input.login,
+        password: input.password
+      }).then(
+      response => {
+        this.tokenService.setAuthToken(response.data.token);
+        localStorage.setItem('auth_token', response.data.token);
+        this.router.navigate(['/message']); // Navigate to a protected route after login
+      }).catch(
+      error => {
+        this.tokenService.setAuthToken(null);
+        localStorage.removeItem('auth_token');
+        this.router.navigate(['/welcome']); // Navigate to a protected route after login
+      }
+    );
   }
-
 }

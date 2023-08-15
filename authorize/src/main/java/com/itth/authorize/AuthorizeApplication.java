@@ -25,7 +25,7 @@ public class AuthorizeApplication {
 	    public CommandLineRunner setupDefaultUser(UserRepository userRepository) {
 	        return args -> {
 	            Optional<User> user = userRepository.findByLogin("admin");
-	            if (!user.isPresent()) {
+	            if (user.isEmpty()) {
 					try {
 						User defaultUser = new User();
 						defaultUser.setLogin("admin");

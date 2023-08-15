@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AxiosService {
+export class TokenService {
 
   constructor() {
     axios.defaults.baseURL = 'http://localhost:8080';
@@ -37,5 +38,17 @@ export class AxiosService {
           data: data,
           headers: headers
       });
+  }
+
+  isUserAuthenticated(): Promise<boolean> {
+      return this.request('GET', '/check', null)
+          .then(response => {
+              // Assuming the backend returns true or false for authentication status
+              return response.data;
+          })
+          .catch(error => {
+              // If there's an error, assume the user is not authenticated
+              return false;
+          });
   }
 }
