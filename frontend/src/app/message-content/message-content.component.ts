@@ -18,16 +18,7 @@ export class MessageContentComponent {
         {}).then(
         (response) => {
             this.data = response.data;
-        }).catch(
-        (error) => {
-            if (error.response.status === 401) {
-                this.tokenService.setAuthToken(null);
-            } else {
-                this.data = error.response.code;
-            }
-
-        }
-    );
+        });
   }
 
 }

@@ -14,6 +14,13 @@ import {TokenService} from './token.service';
 import {RegisterFormComponent} from './register-form/register-form.component';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TokenInterceptor} from './token.interceptor';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import { ErrorHandler } from '@angular/core';
+import { ErrorHandlerService } from './error-handler.service';
+import { HttpErrorInterceptor } from './http-error-interceptor.service';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -23,14 +30,22 @@ import {TokenInterceptor} from './token.interceptor';
     LoginFormComponent,
     WelcomeContentComponent,
     MessageContentComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatIconModule
   ],
-  providers: [TokenService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+  providers: [TokenService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

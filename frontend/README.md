@@ -1,19 +1,15 @@
+# Resources
+
+Thanks to following persons/resources as unordered list which helped me to build this project:
+
+<li>Imesha Sudasingha - <a href="https://medium.com/geekculture/role-based-access-control-rbac-with-spring-boot-and-jwt-bc20a8c51c15">Role Based Access Control (RBAC) with Spring Boot and JWT</a></li>
+<li>Sergio Lema - <a href="https://github.com/serlesen/fullstack-jwt">Secure Your Fullstack Angular - Spring Boot Application With the JWT Authentication</a></li>
+<li>Dan Vega - <a href="https://www.youtube.com/watch?v=KYNR5js2cXE&t=66s">Spring Security JWT: How to secure your Spring Boot REST APIs with JSON Web Tokens</a></li>
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
-
 Angular Frontend connected to a Spring Boot backend.
-
-The frontend is as simple as possible to just show the logic of authentication via a JWT.
-
-
-## Run on local
-
-```
-yarn start
-```
-
-The application will run on `http://localhost:4200`
 
 ## Components
 
@@ -21,41 +17,22 @@ The application will run on `http://localhost:4200`
 
 Main wrapper component. It has no logic inside. It just places the Header and the AppContent.
 
-### Content Component
-
-Displays the Buttons and the Content of the application.
-
-The Buttons are there to show the login form or logout the user.
-
-At the beginning, nothing is shown but the WelcomeContent component with a welcome message.
-
-Once authenticated via the login form, the AppContent component displays the AuthContent component with the protected information.
-
-### Buttons Component
-
-It displays two buttons. The login button only displays the login form. The logout button removes all the authentication information of the user.
-
-### Header Component
-
-Static header with the title and the logo.
-
-### Login Form Component
-
-Displays a splitted Form with the Login form on one side and the register form on the other side. 
-
-Submitting one form or the other will request different endpoints in the backend.
-
-### Welcome Content Component
-
-Simple component which displays a Welcome message.
-
 ## Authentication
 
 The authentication used is JWT. First, the user must login in the backend with a username and password.
-
 If the credentials are correct, a JWT will be returned.
-
 The JWT will be stored in the localstorage for further usage.
+When available the JWT will be sent in the Authorization Header for each request made with axios.
 
-When available the JWT will be sent in the Authorization Header for each requests made with axios.
+# Backend
 
+The backend service is a Spring Boot application with JWT authentication. Further there is a role based access control
+(RBAC) implemented which might be easily adopted to other role based mechanism. Roles/Permissions have to be hard coded
+by nature here since the services are tight to specific roles.
+
+
+# Disclaimer
+
+Spring and Angular are highly dynamic frameworks. This project is based on technology of year 2023. This project is just a
+showcase and not a production ready application. Further there is no guarantee of correctness or completeness of the code. 
+Use it at your own risk. Please feel to complain about major misconceptions I am more than happy to learn from it.

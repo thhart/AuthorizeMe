@@ -28,7 +28,7 @@ public class Role implements Serializable {
     @Column
     private String name; // e.g., "USER", "ADMIN"
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Permission> permissions;
 
     @Serial

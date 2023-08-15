@@ -6,6 +6,7 @@ import com.itth.authorize.dto.SignUpDto;
 import com.itth.authorize.dto.UserDto;
 import com.itth.authorize.exception.AppException;
 import com.itth.authorize.mapper.UserMapper;
+import com.itth.authorize.model.Permission;
 import com.itth.authorize.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +35,9 @@ public class UserService {
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
-            return userMapper.toUserDto(user);
+            final UserDto userDto = userMapper.toUserDto(user);
+            userDto.setPermissions(user.getRoles().stream().flatMap(role -> role.getPermissions().stream().map(Permission::getName)).collect(Collectors.toList()));
+            return userDto;
         }
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }

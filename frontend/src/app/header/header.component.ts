@@ -21,19 +21,25 @@ export class HeaderComponent implements OnInit {
     // Listen to router events
      this.router.events.subscribe(event => {
        if (event instanceof NavigationEnd) {
-         this.checkUserAuthentication();
+         this.isAuthenticated();
        }
      });
   }
 
   logout() {
+    localStorage.removeItem('permissions');
     localStorage.removeItem('auth_token');
     this.isLoggedIn = false;
     this.authGuard.ok = false;
     this.router.navigate(['/welcome']);
   }
 
-  checkUserAuthentication() {
+  isPermission(permission : string) {
+    let item = localStorage.getItem("permissions");
+    return item != null && item.includes(permission);
+  }
+
+  isAuthenticated() {
     this.isLoggedIn = this.authGuard.ok;
 
     // this.tokenService.isUserAuthenticated().then(isAuthenticated => {

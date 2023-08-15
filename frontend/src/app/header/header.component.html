@@ -2,19 +2,38 @@
   <table width="100%">
     <tr>
       <td align="left">
-        <img src={{logoSrc}} class="app-logo" alt="logo" />
+        <img src={{logoSrc}} class="app-logo" alt="logo"/>
+      </td>
+      <td align="left">
+        <ng-template [ngIf]="isLoggedIn">
+          <a routerLink="/message">
+            Messages
+          </a>
+          <ng-template [ngIf]="isPermission('ADMIN')">
+            |
+            <a routerLink="/role">
+              Roles
+            </a>
+          </ng-template>
+          <ng-template [ngIf]="isPermission('ADMIN')">
+            |
+            <a routerLink="/users">
+              Users
+            </a>
+          </ng-template>
+        </ng-template>
       </td>
       <td align="right">
-        <div *ngIf="isLoggedIn == true">
-           <button class="btn btn-dark" (click)="logout()" style="margin: 10px">
-             Logout
-           </button>
+        <div *ngIf="isLoggedIn">
+          <button class="btn btn-light" (click)="logout()" style="margin: 10px">
+            Logout
+          </button>
         </div>
-        <div *ngIf="isLoggedIn != true">
+        <div *ngIf="!isLoggedIn">
           <a routerLink="/login">
-           <button class="btn btn-dark" style="margin: 10px">
-             Login
-           </button>
+            <button class="btn btn-light" style="margin: 10px">
+              Login
+            </button>
           </a>
         </div>
       </td>

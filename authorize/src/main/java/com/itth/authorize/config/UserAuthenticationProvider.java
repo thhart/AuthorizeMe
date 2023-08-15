@@ -8,18 +8,21 @@ import com.itth.authorize.dto.UserDto;
 import com.itth.authorize.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 
 
 @RequiredArgsConstructor
 @Component
+@Log4j2
 public class UserAuthenticationProvider {
 
     @Value("${security.jwt.token.secret-key:secret-key}")
@@ -44,6 +47,7 @@ public class UserAuthenticationProvider {
                 .withExpiresAt(validity)
                 .withClaim("firstName", user.getFirstName())
                 .withClaim("lastName", user.getLastName())
+                .withClaim("permissions", user.getPermissions())
                 .sign(algorithm);
     }
 
@@ -59,9 +63,15 @@ public class UserAuthenticationProvider {
                 .login(decoded.getIssuer())
                 .firstName(decoded.getClaim("firstName").asString())
                 .lastName(decoded.getClaim("lastName").asString())
+                .permissions(decoded.getClaim("permissions").asList(String.class))
                 .build();
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        final ArrayList<GrantedAuthority> authorities = createAuthorities(user);
+        return new UsernamePasswordAuthenticationToken(user, null, authorities);
+    }
+
+    private static ArrayList<GrantedAuthority> createAuthorities(UserDto user) {
+        return new ArrayList<>(user.getPermissions().stream().map(p -> (GrantedAuthority) () -> p).toList());
     }
 
     public Authentication validateTokenStrongly(String token) {
@@ -74,7 +84,7 @@ public class UserAuthenticationProvider {
 
         UserDto user = userService.findByLogin(decoded.getIssuer());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(user, null, createAuthorities(user));
     }
 
 }

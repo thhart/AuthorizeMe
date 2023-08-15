@@ -28,12 +28,13 @@ export class LoginFormComponent {
       response => {
         this.tokenService.setAuthToken(response.data.token);
         localStorage.setItem('auth_token', response.data.token);
+        localStorage.setItem('permissions', response.data.permissions)
         this.router.navigate(['/message']); // Navigate to a protected route after login
       }).catch(
       error => {
         this.tokenService.setAuthToken(null);
         localStorage.removeItem('auth_token');
-        this.router.navigate(['/welcome']); // Navigate to a protected route after login
+        this.router.navigate(['/welcome']); // Navigate to welcome
       }
     );
   }
