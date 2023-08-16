@@ -3,6 +3,8 @@ package com.itth.authorize;
 import com.itth.authorize.model.Permission;
 import com.itth.authorize.model.Role;
 import com.itth.authorize.model.User;
+import com.itth.authorize.repository.RoleRepository;
+import com.itth.authorize.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -1,0 +1,30 @@
+<h2>Users List</h2>
+<table mat-table>
+  <thead>
+    <tr>
+      <th>Login</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.login }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <a [routerLink]="['/users', user.id]" matTooltip="View User">
+          <i class="material-icons">visibility</i>
+        </a>
+        <a [routerLink]="['/users/edit', user.id]" matTooltip="Edit User">
+          <i class="material-icons">edit</i>
+        </a>
+        <button (click)="deleteUser(user.id)" matTooltip="Delete User">
+          <i class="material-icons">delete</i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<a [routerLink]="['/users/create']" matTooltip="Create New User">
+  <i class="material-icons">add_circle</i> Create New User
+</a>

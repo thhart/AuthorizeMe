@@ -21,6 +21,8 @@ import { ErrorHandler } from '@angular/core';
 import { ErrorHandlerService } from './error-handler.service';
 import { HttpErrorInterceptor } from './http-error-interceptor.service';
 import {MatIconModule} from "@angular/material/icon";
+import { UserListComponent } from './user-list/user-list.component';
+import {UserService} from "./user.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {MatIconModule} from "@angular/material/icon";
     WelcomeContentComponent,
     MessageContentComponent,
     RegisterFormComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,7 @@ import {MatIconModule} from "@angular/material/icon";
     MatDialogModule,
     MatIconModule
   ],
-  providers: [TokenService,
+  providers: [TokenService, UserService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService },
