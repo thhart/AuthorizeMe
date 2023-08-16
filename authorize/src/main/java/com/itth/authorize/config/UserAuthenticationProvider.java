@@ -71,7 +71,7 @@ public class UserAuthenticationProvider {
     }
 
     private static ArrayList<GrantedAuthority> createAuthorities(UserDto user) {
-        return new ArrayList<>(user.getPermissions().stream().map(p -> (GrantedAuthority) () -> p).toList());
+        return user == null || user.getPermissions() == null? new ArrayList<>() : new ArrayList<>(user.getPermissions().stream().map(p -> (GrantedAuthority) () -> p).toList());
     }
 
     public Authentication validateTokenStrongly(String token) {

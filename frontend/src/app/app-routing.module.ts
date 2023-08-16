@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'welcome', component: WelcomeContentComponent },
+  { path: 'users', component: UserListComponent },
 ];
 
 // Import your components
@@ -15,6 +16,7 @@ import { MessageContentComponent } from './message-content/message-content.compo
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { WelcomeContentComponent } from './welcome-content/welcome-content.component';
+import {UserListComponent} from "./user-list/user-list.component";
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

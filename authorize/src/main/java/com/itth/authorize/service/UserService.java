@@ -1,6 +1,6 @@
 package com.itth.authorize.service;
 
-import com.itth.authorize.UserRepository;
+import com.itth.authorize.repository.UserRepository;
 import com.itth.authorize.dto.CredentialsDto;
 import com.itth.authorize.dto.SignUpDto;
 import com.itth.authorize.dto.UserDto;
