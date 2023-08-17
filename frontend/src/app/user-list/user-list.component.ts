@@ -1,8 +1,7 @@
-// user-list.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import {User} from "../model/user";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -12,7 +11,7 @@ import {User} from "../model/user";
 export class UserListComponent implements OnInit {
   users: User[] = []; // Assuming you have a User model
 
-  constructor(private restService: RestService) { }
+  constructor(private restService: RestService, private router: Router) { }
 
   ngOnInit(): void {
     this.list();
@@ -26,8 +25,13 @@ export class UserListComponent implements OnInit {
 
   delete(userId: string): void {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.restService.delete("/users", userId).then(() => {
+      let promise = this.restService.delete("/users", userId);
+      promise.then(response => {
         this.list(); // Refresh the list after deletion
+      }, error => {
+        console.log(error);
+      }).catch(error => {
+        console.log(error);
       });
     }
   }

@@ -36,7 +36,7 @@ public class User implements Serializable {
     private String email;
 
     @NotBlank
-    @Size(min = 8, max = 100)
+    @Size(min = 2, max = 100)
     @Column
     private String password;
 

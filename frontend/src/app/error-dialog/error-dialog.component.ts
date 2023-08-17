@@ -12,4 +12,6 @@ export class ErrorDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) data: { errorMessage: string }, private cdr: ChangeDetectorRef) {
     this.message = data.errorMessage;
   }
+
+  protected readonly close = close;
 }

@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -23,6 +24,7 @@ import { HttpErrorInterceptor } from './http-error-interceptor.service';
 import {MatIconModule} from "@angular/material/icon";
 import { UserListComponent } from './user-list/user-list.component';
 import {RestService} from "./rest.service";
+import { UserNewComponent } from './user-new/user-new.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import {RestService} from "./rest.service";
     MessageContentComponent,
     RegisterFormComponent,
     ErrorDialogComponent,
-    UserListComponent
+    UserListComponent,
+    UserNewComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import {RestService} from "./rest.service";
     FormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    ReactiveFormsModule,
     MatIconModule
   ],
   providers: [TokenService, RestService,

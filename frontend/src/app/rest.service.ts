@@ -21,7 +21,7 @@ export class RestService {
     return this.tokenService.request("GET",path + `/${id}`, {});
   }
 
-  create(path:string,user: User): Promise<any> {
+  add(path:string, user: User): Promise<any> {
     return this.tokenService.request("POST", path, user);
   }
 
