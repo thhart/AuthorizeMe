@@ -22,7 +22,7 @@ export class UserNewComponent implements OnInit {
         });
     }
 
-    onSubmit(): void {
+    onAddUser(): void {
         if (this.userForm.valid) {
             const newUser = this.userForm.value;
             this.restService.add("/users", newUser).then(() => {

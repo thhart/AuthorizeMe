@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'welcome', component: WelcomeContentComponent },
+  { path: 'roles', component: RoleListComponent },
   { path: 'users', component: UserListComponent },
   { path: 'users/new', component: UserNewComponent },
 ];
@@ -19,6 +20,7 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { WelcomeContentComponent } from './welcome-content/welcome-content.component';
 import {UserListComponent} from "./user-list/user-list.component";
 import {UserNewComponent} from "./user-new/user-new.component";
+import {RoleListComponent} from "./role-list/role-list.component";
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

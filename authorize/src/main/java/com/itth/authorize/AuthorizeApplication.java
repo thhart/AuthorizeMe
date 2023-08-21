@@ -13,9 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @SpringBootApplication
 @Log4j2
@@ -47,7 +47,9 @@ public class AuthorizeApplication {
 						log.error(e, e);
 					}
 				}
-				final List<Role> roleList = roleRepository.findAll();
+				final Iterable<Role> roles = roleRepository.findAll();
+				final List<Role> roleList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(roles.iterator(), Spliterator.ORDERED), false)
+				                                         .collect(Collectors.toList());
 				if(roleList.isEmpty()) {
 					try {
 						Role defaultRole = new Role();

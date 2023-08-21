@@ -1,0 +1,77 @@
+<div class="container mt-5">
+    <h2>Roles</h2>
+    <table class="table table-bordered table-hover boundary0001">
+        <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let role of roles">
+                <td [id]="role.id" (cdkDropListDropped)="onDrop($event)" cdkDropListOrientation="horizontal" cdkDropList>
+                  <b>{{ role.name }}</b><br/>
+                      <div class="box-3d" *ngFor="let permission of role.permissions">{{ permission.name }}</div>
+                </td>
+                <td>
+                  <a [routerLink]="['/roles']" (click)="deleteRole(role.id)">
+                    <mat-icon class="material-icons">delete</mat-icon>
+                  </a>
+                </td>
+            </tr>
+        <tr>
+          <td colspan=3>
+            <form [formGroup]="roleForm" (ngSubmit)="onAddRole()">
+              Role: <input formControlName="name" placeholder="">
+              <button type="submit">
+                <mat-icon class="material-icons">add</mat-icon>
+                </button>
+            </form>
+          </td>
+        </tr>
+    <tr>
+          <td colspan=3>
+            Drag and Drop to assign to roles:<br/>
+            <div cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="targets" cdkDropList #source="cdkDropList">
+              <span *ngFor="let permission of permissions" class="box-3d" cdkDragBoundary=".boundary0001" cdkDrag [cdkDragData]="permission" (cdkDragEnded)="dragEnded($event)">{{ permission.name }}</span>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+  <h2>Permissions</h2>
+  <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let permission of permissions">
+                <td>
+                  <span class="box-3d">{{ permission.name }}</span>
+                </td>
+                <td>
+                  {{ permission.description }}
+                </td>
+                <td>
+                  <a [routerLink]="['/roles']" (click)="deletePermission(permission.id)">
+                    <mat-icon class="material-icons">delete</mat-icon>
+                  </a>
+                </td>
+            </tr>
+        <tr>
+          <td colspan=3>
+            <form [formGroup]="permissionForm" (ngSubmit)="onAddPermission()">
+              Permission: <input formControlName="name" placeholder="">
+              <button type="submit">
+                <mat-icon class="material-icons">add</mat-icon>
+                </button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

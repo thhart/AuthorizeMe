@@ -30,8 +30,14 @@ public class SecurityConfig {
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/login", "/register", "/check").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/check").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.GET, "/check", "/error", "/favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()  // Allow all actuator endpoints
+                        .requestMatchers(HttpMethod.GET, "/**").permitAll()  // Allow all actuator endpoints
+                        .requestMatchers(HttpMethod.POST, "/**").permitAll()  // Allow all actuator endpoints
+                        .requestMatchers(HttpMethod.PUT, "/**").permitAll()  // Allow all actuator endpoints
+                        .anyRequest().authenticated()
+
+                )
         ;
         return http.build();
     }

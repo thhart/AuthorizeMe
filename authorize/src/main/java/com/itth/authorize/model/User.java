@@ -1,5 +1,6 @@
 package com.itth.authorize.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -38,6 +39,7 @@ public class User implements Serializable {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column
+    @JsonIgnore
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
