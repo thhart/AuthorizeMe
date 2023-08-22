@@ -36,3 +36,18 @@ body { margin: 0; font-family: Roboto, sans-serif; }
     2px 2px 0 #2c3e50;
   transform: perspective(100px) rotateX(0.5deg) rotateY(0.5deg);
 }
+
+.permission-container {
+  position: relative;
+  display: inline-block; /* or 'inline-flex' if you prefer */
+}
+
+.close-icon {
+  opacity: 0.75;
+  transform: scale(0.75);
+  position: absolute;
+  top: 0; /* Adjust as needed */
+  right: 0; /* Adjust as needed */
+  cursor: no-drop;
+}
+

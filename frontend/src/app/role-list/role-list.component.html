@@ -11,7 +11,10 @@
             <tr *ngFor="let role of roles">
                 <td [id]="role.id" (cdkDropListDropped)="onDrop($event)" cdkDropListOrientation="horizontal" cdkDropList>
                   <b>{{ role.name }}</b><br/>
-                      <div class="box-3d" *ngFor="let permission of role.permissions">{{ permission.name }}</div>
+                    <span *ngFor="let permission of role.permissions" class="permission-container">
+                        <div class="box-3d">{{ permission.name }}</div>
+                        <mat-icon (click)="onRemove(role, permission)" class="close-icon">close</mat-icon>
+                    </span>
                 </td>
                 <td>
                   <a [routerLink]="['/roles']" (click)="deleteRole(role.id)">

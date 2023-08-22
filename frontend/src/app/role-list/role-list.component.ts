@@ -137,4 +137,10 @@ export class RoleListComponent {
   onDragOver(event: DragEvent, id: string) {
     console.log("Over: ", event)
   }
+
+  onRemove(role: Role, permission: Permission) {
+    role.permissions.splice(role.permissions.indexOf(permission), 1);// some logic
+    this.restService.call("/api/roles/" + role.id + "/permissions", role.permissions).then(() => {
+    });
+  };
 }

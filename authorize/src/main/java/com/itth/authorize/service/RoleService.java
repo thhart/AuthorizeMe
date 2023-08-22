@@ -16,9 +16,9 @@ public class RoleService {
     private RoleRepository roleRepository;
 
     @Transactional
-    public Role addPermissionsToRole(String roleId, List<Permission> permissions) {
+    public Role modifyPermissionsOfRole(String roleId, List<Permission> permissions) {
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new EntityNotFoundException("Role not found"));
-        role.getPermissions().addAll(permissions);
+        role.getPermissions().retainAll(permissions);
         return roleRepository.save(role);
     }
 }

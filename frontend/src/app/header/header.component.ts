@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   constructor(private tokenService: TokenService, private router: Router, private authGuard: AuthGuard) {
+    this.isLoggedIn = localStorage.getItem('permissions') != null;
+    this.authGuard.ok = this.isLoggedIn;
   } // Inject the service
 
   ngOnInit() {
