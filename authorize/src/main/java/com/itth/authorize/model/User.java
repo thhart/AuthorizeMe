@@ -7,11 +7,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.io.IOException;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -20,8 +19,10 @@ import java.util.Set;
 @Table(name = "person")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode()
 public class User implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @UuidGenerator
     private String id;
 
@@ -42,18 +43,6 @@ public class User implements Serializable {
     @JsonIgnore
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
-
-    @Serial
-    private void writeObject(java.io.ObjectOutputStream stream)
-            throws IOException {
-        stream.defaultWriteObject();
-    }
-
-    @Serial
-    private void readObject(java.io.ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
-        stream.defaultReadObject();
-    }
 }

@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()  // Allow all actuator endpoints
                         .requestMatchers(HttpMethod.POST, "/**").permitAll()  // Allow all actuator endpoints
                         .requestMatchers(HttpMethod.PUT, "/**").permitAll()  // Allow all actuator endpoints
+                        .requestMatchers(HttpMethod.PATCH, "/**").permitAll()  // Allow all actuator endpoints
                         .anyRequest().authenticated()
 
                 )

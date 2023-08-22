@@ -1,14 +1,6 @@
 import {Permission} from './permission';
-import {
-  HateoasProjection,
-  HateoasResource,
-  ProjectionRel,
-  ProjectionRelType,
-  Resource
-} from "@lagoshny/ngx-hateoas-client";
 
-@HateoasResource('roles')
-export class  Role extends Resource{
+export class  Role {
   // constructor(id: string, name: string, permissions: Permission[]) {
   //   super();
   //   this.id = id;

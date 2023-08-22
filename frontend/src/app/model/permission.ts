@@ -1,7 +1,4 @@
-import {HateoasResource, Resource} from "@lagoshny/ngx-hateoas-client";
-
-@HateoasResource('permissions')
-export class Permission extends Resource {
+export class Permission {
   // constructor(id: string, name: string, description: string) {
   //   super();
   //   this.id = id;

@@ -1,17 +1,14 @@
 package com.itth.authorize.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.io.IOException;
-import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -19,27 +16,17 @@ import java.io.Serializable;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Permission implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @UuidGenerator
     private String id;
 
     @NotBlank
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 64)
     private String name; // e.g., "READ_POST", "EDIT_USER"
 
-    @Size(max = 200)
-    private String description;
-
-    @Serial
-    private void writeObject(java.io.ObjectOutputStream stream)
-            throws IOException {
-        stream.defaultWriteObject();
-    }
-
-    @Serial
-    private void readObject(java.io.ObjectInputStream stream)
-            throws IOException, ClassNotFoundException {
-        stream.defaultReadObject();
-    }
+    @Size(max = 256)
+    private String description = "";
 }

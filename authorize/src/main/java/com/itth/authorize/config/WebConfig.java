@@ -33,6 +33,7 @@ public class WebConfig {
         config.setAllowedMethods(Arrays.asList(
                 HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
+                HttpMethod.PATCH.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name()));
         config.setMaxAge(MAX_AGE);

@@ -3,7 +3,6 @@ import {RestService} from "../rest.service";
 import {Router} from "@angular/router";
 import {Role} from "../model/role";
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {HateoasResourceService, ResourceCollection} from "@lagoshny/ngx-hateoas-client";
 import {Permission} from "../model/permission";
 import {CdkDragDrop, CdkDragEnd} from "@angular/cdk/drag-drop";
 
@@ -17,10 +16,9 @@ export class RoleListComponent {
   permissions: Permission[] = []; // Assuming you have a User model
   roleForm: FormGroup;
   permissionForm: FormGroup;
-
+  protected readonly onsubmit = onsubmit;
 
   constructor(private fb: FormBuilder,
-              private resourceService: HateoasResourceService,
               private restService: RestService, private router: Router) {
     this.roleForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(128)]],
@@ -30,30 +28,32 @@ export class RoleListComponent {
     });
   }
 
+  get targets(): string[] {
+    // Create an array of the ids of the target lists
+    return this.roles.map(list => list.id);
+  }
+
   ngOnInit(): void {
     this.list();
   }
 
   list(): void {
-    this.resourceService.getPage(Role)
-      .subscribe((collection: ResourceCollection<Role>) => {
-        this.roles.splice(0, this.roles.length);
-        for (let entry of collection.resources) {
-          this.roles.push(entry);// some logic
-        }
-      });
-    this.resourceService.getPage(Permission)
-      .subscribe((collection: ResourceCollection<Permission>) => {
-        this.permissions.splice(0, this.roles.length);
-        for (let entry of collection.resources) {
-          this.permissions.push(entry);// some logic
-        }
-      });
+    this.restService.list("/roles").then(response => {
+      for (let entry of response.data._embedded.roles) {
+        this.roles.push(entry);// some logic
+      }
+    });
+    this.restService.list("/permissions").then(response => {
+      for (let entry of response.data._embedded.permissions) {
+        this.permissions.push(entry);// some logic
+      }
+    });
   }
 
   deleteRole(id: string): void {
     if (confirm('Are you sure you want to delete this role?')) {
-      this.resourceService.deleteResourceById(Role, id).subscribe((deletedResource: Role) => {
+      let promise = this.restService.delete("/roles", id);
+      promise.then(response => {
           let deleted = this.roles.filter(value => {
             return value.id == id;
           });
@@ -67,44 +67,48 @@ export class RoleListComponent {
 
   deletePermission(id: string): void {
     if (confirm('Are you sure you want to delete this permission?')) {
-      this.resourceService.deleteResourceById(Permission, id).subscribe((deletedResource: Permission) => {
-          let deleted = this.permissions.filter(value => {
-            return value.id == id;
-          });
-          for (let entry of deleted) {
-            this.permissions.splice(this.permissions.indexOf(entry), 1);// some logic
-          }
+      let promise = this.restService.delete("/permissions", id);
+      promise.then(response => {
+        let deleted = this.permissions.filter(value => {
+          return value.id == id;
+        });
+        for (let entry of deleted) {
+          this.permissions.splice(this.permissions.indexOf(entry), 1);// some logic
         }
-      );
+      }, error => {
+        console.log(error);
+      }).catch(error => {
+        console.log(error);
+      });
+
+      // this.resourceService.deleteResourceById(Permission, id).subscribe((deletedResource: Permission) => {
+      //     let deleted = this.permissions.filter(value => {
+      //       return value.id == id;
+      //     });
+      //     for (let entry of deleted) {
+      //       this.permissions.splice(this.permissions.indexOf(entry), 1);// some logic
+      //     }
+      //   }
+      // );
     }
   }
-
 
   onAddRole(): void {
     if (this.roleForm.valid) {
       const role = this.roleForm.value;
-      this.resourceService.createResource(Role, {body: role}).subscribe((createdResource: Role) => {
-          this.roles.push(createdResource);
-        }
-      );
+      this.restService.add("roles", role).then(value => {
+        this.roles.push(value);
+      });
     }
   }
 
   onAddPermission(): void {
     if (this.permissionForm.valid) {
       const permission = this.permissionForm.value;
-      this.resourceService.createResource(Permission, {body: permission}).subscribe((createdResource: Permission) => {
-          this.permissions.push(createdResource);
-        }
-      );
+      this.restService.add("/permissions", permission).then(value => {
+        this.permissions.push(value);
+      });
     }
-  }
-
-  protected readonly onsubmit = onsubmit;
-
-  get targets(): string[] {
-    // Create an array of the ids of the target lists
-    return this.roles.map(list => list.id);
   }
 
   dragEnded(event: CdkDragEnd) {
@@ -118,10 +122,11 @@ export class RoleListComponent {
       return value.id == event.container.id;
     });
     for (let role of dropped) {
+      console.log("Want add:" + role.name, role.id, event.item.data.id);
       role.permissions.push(event.item.data)
       this.restService.update("/roles", role.id, role).then(() => {
       });
-      //
+
       // this.resourceService.updateResource(role).subscribe((createdResource: Role) => {
       //   console.log(createdResource);
       //   }

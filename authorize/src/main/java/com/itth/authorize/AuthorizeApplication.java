@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 @Log4j2
 public class AuthorizeApplication {
 
-	public static final String SECURITY_FLAW = "************* SECURITY FLAW *************";
+	public static final String SECURITY_FLAW = "************* SECURITY FLAW ************* ";
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuthorizeApplication.class, args);
