@@ -6,18 +6,16 @@
       </td>
       <td align="left">
         <ng-template [ngIf]="isLoggedIn">
-          <a routerLink="/message">
+          <a routerLink="/message" class="box-3d-menu">
             Messages
           </a>
           <ng-template [ngIf]="isPermission('ADMIN')">
-            |
-            <a routerLink="/roles">
+            <a routerLink="/roles" class="box-3d-menu">
               Roles
             </a>
           </ng-template>
           <ng-template [ngIf]="isPermission('ADMIN')">
-            |
-            <a routerLink="/users">
+            <a routerLink="/users" class="box-3d-menu">
               Users
             </a>
           </ng-template>

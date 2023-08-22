@@ -30,6 +30,21 @@ body { margin: 0; font-family: Roboto, sans-serif; }
   transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
+.box-3d-menu {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  background-color: #e4e4e4; /* Change to your preferred color */
+  color: black;
+  font-size: 16px;
+  border: 1px solid #2980b9; /* Slightly darker shade for the border */
+  box-shadow:
+    1px 1px 0 #2980b9,  /* Right and bottom shadow */
+    2px 2px 0 #2c3e50; /* Deeper shadow for a 3D effect */
+  transform: perspective(100px) rotateX(1deg) rotateY(1deg); /* Gives a slight 3D tilt */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
 .box-3d:hover {
   box-shadow:
     1px 1px 0 #2980b9,
