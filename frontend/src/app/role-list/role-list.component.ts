@@ -123,7 +123,7 @@ export class RoleListComponent {
     });
     for (let role of dropped) {
       let contained = role.permissions.filter(value => {
-        return value.name == event.item.data.name;
+        return value.id == event.item.data.id;
       });
       if(contained.length == 0) {
         role.permissions.push(event.item.data)

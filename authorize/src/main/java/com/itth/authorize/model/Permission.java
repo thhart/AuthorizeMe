@@ -25,7 +25,7 @@ public class Permission implements Serializable {
 
     @NotBlank
     @Size(min = 3, max = 64)
-    private String name; // e.g., "READ_POST", "EDIT_USER"
+    private String name;
 
     @Size(max = 256)
     private String description = "";

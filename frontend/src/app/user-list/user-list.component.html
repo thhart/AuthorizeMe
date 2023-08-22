@@ -1,35 +1,56 @@
 <div class="container mt-5">
     <h2>Users</h2>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover boundary0001">
         <thead class="thead-light">
-            <tr>
-                <th>Login</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of users">
+        <ng-container *ngFor="let user of users">
+            <tr>
                 <td>{{ user.login }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                  <a [routerLink]="['/users', user.id]" matTooltip="View User">
-                    <i class="material-icons">visibility</i>
-                  </a>
-                  <a [routerLink]="['/users/edit', user.id]" matTooltip="Edit User">
-                    <i class="material-icons">edit</i>
-                  </a>
-                  <a [routerLink]="['/users']" (click)="delete(user.id)">
-                    <i class="material-icons">delete</i>
-                  </a>
+                    <a [routerLink]="['/users', user.id]" matTooltip="View User">
+                        <i class="material-icons">visibility</i>
+                    </a>
+                    <a [routerLink]="['/users/edit', user.id]" matTooltip="Edit User">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a (click)="delete(user.id)" [routerLink]="['/users']">
+                        <i class="material-icons">delete</i>
+                    </a>
                 </td>
             </tr>
+            <tr>
+                <td colspan="3" [id]="user.id" (cdkDropListDropped)="onDrop($event)" cdkDropListOrientation="horizontal"
+                    cdkDropList>
+                    <span *ngFor="let role of user.roles" class="permission-container">
+                        <div class="box-3d">{{ role.name }}</div>
+                        <mat-icon (click)="onRemove(user, role)" class="close-icon">close</mat-icon>
+                    </span>
+                </td>
+            </tr>
+        </ng-container>
         <tr>
-          <td colspan=3>
-            <a [routerLink]="['/users/new']" matTooltip="Create User">
-              <i class="material-icons">add</i>
-            </a>
-          </td>
+            <td colspan=3>
+                <a [routerLink]="['/users/new']" matTooltip="Create User">
+                    <i class="material-icons">add</i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3>
+                Drag and Drop to assign to persons:<br/>
+                <div cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="targets" cdkDropList
+                     #source="cdkDropList">
+                    <span *ngFor="let role of roles" class="box-3d" cdkDragBoundary=".boundary0001" cdkDrag
+                          [cdkDragData]="role" (cdkDragEnded)="dragEnded($event)">{{ role.name }}</span>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

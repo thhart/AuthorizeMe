@@ -16,7 +16,7 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping("/{roleId}/permissions")
-    public ResponseEntity<Role> addPermissions(@PathVariable String roleId, @RequestBody List<Permission> permissions) {
+    public ResponseEntity<Role> modifyPermissions(@PathVariable String roleId, @RequestBody List<Permission> permissions) {
         Role updatedRole = roleService.modifyPermissionsOfRole(roleId, permissions);
         return ResponseEntity.ok(updatedRole);
     }

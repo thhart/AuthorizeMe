@@ -32,14 +32,17 @@
             </form>
           </td>
         </tr>
-    <tr>
-          <td colspan=3>
-            Drag and Drop to assign to roles:<br/>
-            <div cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="targets" cdkDropList #source="cdkDropList">
-              <span *ngFor="let permission of permissions" class="box-3d" cdkDragBoundary=".boundary0001" cdkDrag [cdkDragData]="permission" (cdkDragEnded)="dragEnded($event)">{{ permission.name }}</span>
-            </div>
-          </td>
-        </tr>
+            <tr>
+                <td colspan=3>
+                    Drag and Drop to assign to roles:<br/>
+                    <div cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="targets" cdkDropList
+                         #source="cdkDropList">
+                        <span *ngFor="let permission of permissions" class="box-3d" cdkDragBoundary=".boundary0001"
+                              cdkDrag [cdkDragData]="permission"
+                              (cdkDragEnded)="dragEnded($event)">{{ permission.name }}</span>
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
   <h2>Permissions</h2>

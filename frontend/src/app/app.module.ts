@@ -27,55 +27,45 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {RoleListComponent} from './role-list/role-list.component';
 import {MatButtonModule} from '@angular/material/button';
-import {NgxHateoasClientConfigurationService, NgxHateoasClientModule} from "@lagoshny/ngx-hateoas-client";
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ButtonsComponent,
-    HeaderComponent,
-    LoginFormComponent,
-    WelcomeContentComponent,
-    MessageContentComponent,
-    RegisterFormComponent,
-    ErrorDialogComponent,
-    UserListComponent,
-    UserNewComponent,
-    RoleListComponent
-  ],
-  imports: [
-    DragDropModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatButtonModule,
-    HttpClientModule,
-    NgxHateoasClientModule.forRoot(),
-    MatIconModule
-  ],
-  providers: [TokenService, RestService,
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
-    // {provide: ErrorHandler, useClass: ErrorHandlerService},
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ButtonsComponent,
+        HeaderComponent,
+        LoginFormComponent,
+        WelcomeContentComponent,
+        MessageContentComponent,
+        RegisterFormComponent,
+        ErrorDialogComponent,
+        UserListComponent,
+        UserNewComponent,
+        RoleListComponent
+    ],
+    imports: [
+        DragDropModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatButtonModule,
+        HttpClientModule,
+        MatIconModule
+    ],
+    providers: [TokenService, RestService,
+        {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+        // {provide: ErrorHandler, useClass: ErrorHandlerService},
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(hateoasConfig: NgxHateoasClientConfigurationService) {
-    hateoasConfig.configure({
-          http: {
-            // Use this router name for default Resources route
-            defaultRoute: {
-                rootUrl: 'http://localhost:8080/'
-            }
-          }
-        });
-  }
+    constructor() {
+    }
 }
