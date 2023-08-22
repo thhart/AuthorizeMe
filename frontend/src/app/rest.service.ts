@@ -26,7 +26,11 @@ export class RestService {
   }
 
   update(path:string,id: string, entity: any): Promise<any> {
-    return this.tokenService.request("PUT",path + `/${id}`, entity);
+    return this.tokenService.request("POST",path + `/${id}`, entity);
+  }
+
+  call(path:string, entity: any): Promise<any> {
+    return this.tokenService.request("POST",path, entity);
   }
 
   delete(path:string,id: string): Promise<any> {

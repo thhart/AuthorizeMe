@@ -122,15 +122,14 @@ export class RoleListComponent {
       return value.id == event.container.id;
     });
     for (let role of dropped) {
-      console.log("Want add:" + role.name, role.id, event.item.data.id);
-      role.permissions.push(event.item.data)
-      this.restService.update("/roles", role.id, role).then(() => {
+      let contained = role.permissions.filter(value => {
+        return value.name == event.item.data.name;
       });
-
-      // this.resourceService.updateResource(role).subscribe((createdResource: Role) => {
-      //   console.log(createdResource);
-      //   }
-      // );
+      if(contained.length == 0) {
+        role.permissions.push(event.item.data)
+        this.restService.call("/api/roles/" + role.id + "/permissions", role.permissions).then(() => {
+        });
+      }
     }
     console.log("Dropped: ", event.container.id)
   }
