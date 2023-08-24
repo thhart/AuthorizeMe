@@ -1,13 +1,14 @@
-This is a rather simple Angular/Spring testbed application with following features:
+This is a simple Angular/Spring testbed application with following features:
 
 <ul>
-<li>Spring Boot</li>
-<li>Spring JPA / Repository</li>
-<li>JWT</li>
-<li>Role based access control RBAC</li>
+<li>Spring Boot / JPA / Rest Repository</li>
+<li>JWT - JSON Web Token</li>
+<li>RBAC - Role based access control</li>
 <li>Spring Method security</li>
-<li>Angular Drap and Drop</li>
-<li>Angular Path/Role based authorization checking</li>
+<li>Angular - Drap and Drop</li>
+<li>Angular - Path/Role based authorization checking</li>
+<li>Angular - Simple collapsable status bar</li>
+<li>SSE - Simple client stream listener for receiving updates when data changed elsewhere</li>
 </ul>
 
 # Install
@@ -29,13 +30,8 @@ Thanks to following persons/resources as unordered list which helped me to build
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.x.x.
-Angular Frontend connected to a Spring Boot backend.
 
 ## Components
-
-### App Component
-
-Main wrapper component. It has no logic inside. It just places the Header and the AppContent.
 
 ## Authentication
 
@@ -44,7 +40,7 @@ If the credentials are correct, a JWT will be returned.
 The JWT will be stored in the localstorage for further usage.
 When available the JWT will be sent in the Authorization Header for each request made with axios.
 
-# Backend
+## Backend
 
 The backend service is a Spring Boot application with JWT authentication. Further there is a role based access control
 (RBAC) implemented which might be easily adopted to other role based mechanism. Roles/Permissions have to be hard coded
@@ -58,6 +54,7 @@ showcase and not a production ready application. Further there is no guarantee o
 code.
 Use it at your own risk. Please feel to complain about major misconceptions I am more than happy to learn from it.
  
-# Rants
+# Remarks
 
-Spring HATEOAS is a mess and extremely complicated, the binding and or support to any concept MVC is not existing
+Spring HATEOAS is an interesting concept. It strikes me it is obviously somehow hard wired into Spring Rest and can not easily be avoided.
+There might be many pros and cons, the main problem is there are not many public libraries supporting it.

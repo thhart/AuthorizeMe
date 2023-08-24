@@ -1,16 +1,7 @@
 import {Role} from './role';
+import {Identified} from "./identified";
 
-export class User {
-  // constructor(id: string, login: string, email: string, password: string, roles: Role[]) {
-  //   super();
-  //   this.id = id;
-  //   this.login = login;
-  //   this.email = email;
-  //   this.password = password;
-  //   this.roles = roles;
-  // }
-
-  id: string = "";
+export class User extends Identified {
   login: string = "";
   email: string = "";
   password: string = "";

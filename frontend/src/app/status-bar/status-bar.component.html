@@ -1,0 +1,8 @@
+<div class="status-bar" [class.collapsed]="isCollapsed">
+  <mat-icon (click)="toggleCollapse()" [class.rotated]="isCollapsed">expand_more</mat-icon>
+  <span class="message-container">
+    <span *ngFor="let message of messages">
+       {{ message }}
+    </span>
+  </span>
+</div>

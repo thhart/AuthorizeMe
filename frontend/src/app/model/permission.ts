@@ -1,12 +1,6 @@
-export class Permission {
-  // constructor(id: string, name: string, description: string) {
-  //   super();
-  //   this.id = id;
-  //   this.name = name;
-  //   this.description = description;
-  // }
+import {Identified} from "./identified";
 
-  id: string = "";
+export class Permission extends Identified {
   name: string = ""; // e.g., "READ_POST", "EDIT_USER"
   description: string = "";
 }

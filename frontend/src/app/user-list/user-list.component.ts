@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {RestService} from '../rest.service';
 import {User} from "../model/user";
-import {Router} from '@angular/router';
 import {Role} from "../model/role";
 import {CdkDragDrop, CdkDragEnd} from "@angular/cdk/drag-drop";
+import {UtilityService} from "../utility.service";
+import {SyncService} from "../sync.service";
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
     selector: 'app-user-list',
@@ -16,7 +18,15 @@ export class UserListComponent implements OnInit {
 
     // displayedColumns: string[] = ['login', 'email', 'actions']; // Add other column names as needed
 
-    constructor(private restService: RestService, private router: Router) {
+    constructor(private restService: RestService,
+                private utilityService: UtilityService,
+                private changeDetector: ChangeDetectorRef,
+                private syncService: SyncService
+
+    ) {
+        syncService.events$.subscribe(value => {
+           this.list();
+        });
     }
 
     ngOnInit(): void {
@@ -25,22 +35,18 @@ export class UserListComponent implements OnInit {
 
     list(): void {
         this.restService.list("/users").then(response => {
-            this.users.splice(0, this.users.length);
-            for (let entry of response.data._embedded.users) {
-                this.users.push(entry);
-            }
+            this.utilityService.syncArrays(this.users, response.data._embedded.users);
+            this.changeDetector.detectChanges();
         });
         this.restService.list("/roles").then(response => {
-            this.roles.splice(0, this.roles.length);
-            for (let entry of response.data._embedded.roles) {
-                this.roles.push(entry);
-            }
+            this.utilityService.syncArrays(this.roles, response.data._embedded.roles);
+            this.changeDetector.detectChanges();
         });
     }
 
     get targets(): string[] {
-      // Create an array of the ids of the target lists
-      return this.users.map(list => list.id);
+        // Create an array of the ids of the target lists
+        return this.users.map(list => list.id);
     }
 
     delete(userId: string): void {
@@ -64,25 +70,25 @@ export class UserListComponent implements OnInit {
     }
 
     dragEnded(event: CdkDragEnd) {
-      if (!event.source.dropContainer) {
-        event.source._dragRef.reset();
-      }
+        if (!event.source.dropContainer) {
+            event.source._dragRef.reset();
+        }
     }
 
     onDrop(event: CdkDragDrop<any, any>) {
-      let dropped = this.users.filter(value => {
-        return value.id == event.container.id;
-      });
-      for (let user of dropped) {
-        let contained = user.roles.filter(value => {
-          return value.id == event.item.data.id;
+        let dropped = this.users.filter(value => {
+            return value.id == event.container.id;
         });
-        if(contained.length == 0) {
-          user.roles.push(event.item.data)
-          this.restService.call("/api/users/" + user.id + "/roles", user.roles).then(() => {
-          });
+        for (let user of dropped) {
+            let contained = user.roles.filter(value => {
+                return value.id == event.item.data.id;
+            });
+            if (contained.length == 0) {
+                user.roles.push(event.item.data)
+                this.restService.call("/api/users/" + user.id + "/roles", user.roles).then(() => {
+                });
+            }
         }
-      }
-      console.log("Dropped: ", event.container.id)
+        console.log("Dropped: ", event.container.id)
     }
 }

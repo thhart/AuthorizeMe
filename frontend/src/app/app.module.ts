@@ -28,6 +28,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {RoleListComponent} from './role-list/role-list.component';
 import {MatButtonModule} from '@angular/material/button';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { StatusBarComponent } from './status-bar/status-bar.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
         ErrorDialogComponent,
         UserListComponent,
         UserNewComponent,
-        RoleListComponent
+        RoleListComponent,
+        StatusBarComponent
     ],
     imports: [
         DragDropModule,
@@ -61,6 +63,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     providers: [TokenService, RestService,
         {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},
+
         // {provide: ErrorHandler, useClass: ErrorHandlerService},
     ],
     bootstrap: [AppComponent]

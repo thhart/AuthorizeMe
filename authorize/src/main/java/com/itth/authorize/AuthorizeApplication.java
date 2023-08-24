@@ -41,7 +41,7 @@ public class AuthorizeApplication {
 						defaultUser.setEmail("joe@gmail.com");
 						defaultUser.setPassword(passwordEncoder.encode("admin")); // Consider encoding this password
 						defaultUser.setRoles(new HashSet<>());
-						userRepository.save(defaultUser);
+						user = Optional.of(userRepository.save(defaultUser));
 						log.warn(SECURITY_FLAW + "created default user: admin");
 					} catch (Exception e) {
 						log.error(e, e);
@@ -68,7 +68,7 @@ public class AuthorizeApplication {
 				}
 				if(user.isPresent() && user.get().getRoles().isEmpty() && !roleList.isEmpty()) {
 					try {
-						user.get().getRoles().addAll(roleList);
+						user.get().getRoles().addAll(roleList.stream().filter(role -> role.getName().equals("ADMIN")).toList());
 						userRepository.save(user.get());
 						log.warn(SECURITY_FLAW + "updated roles for user: admin");
 					} catch (Exception e) {

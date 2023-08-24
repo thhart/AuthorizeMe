@@ -1,6 +1,7 @@
 package com.itth.authorize.model;
 
 import com.google.common.base.Objects;
+import com.itth.authorize.service.listener.ModelListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -19,6 +21,7 @@ import java.util.stream.IntStream;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(ModelListener.class)
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -29,6 +32,9 @@ public class Role implements Serializable {
     @Size(min = 3, max = 50)
     @Column
     private String name;
+
+    @Version
+    private Timestamp version;
 
     @OrderBy(value = "name")
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
